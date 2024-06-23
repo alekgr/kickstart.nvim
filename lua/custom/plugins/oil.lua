@@ -1,5 +1,6 @@
 return {
   'stevearc/oil.nvim',
+  dependencies = { 'nvim-tree/nvim-web-devicons' },
   opts = {
     columns = {
       'icon',
@@ -8,5 +9,4 @@ return {
       'mtime',
     },
   },
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
 }
