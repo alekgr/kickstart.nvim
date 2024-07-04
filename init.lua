@@ -194,6 +194,10 @@ vim.keymap.set('n', 'bn', '<CMD>bNext<CR>', { desc = 'Next buffer', silent = tru
 vim.keymap.set('n', 'bp', '<CMD>bprev<CR>', { desc = 'Prev buffer', silent = true, noremap = true })
 vim.keymap.set('n', 'bl', '<CMD>ls<CR>', { desc = 'List buffers', silent = true, noremap = true })
 vim.keymap.set('n', 'bd', '<CMD>bd<CR>', { desc = 'Delete buffer', silent = true, noremap = true })
+
+--saving
+vim.keymap.set('n', '<leader>w', '<CMD>w<CR>', { desc = 'save a file', silent = false, noremap = true })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
