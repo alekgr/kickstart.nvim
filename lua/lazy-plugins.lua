@@ -44,6 +44,8 @@ require('lazy').setup({
 
   require 'kickstart/plugins/tokyonight',
 
+  require 'kickstart/plugins/mini',
+
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
