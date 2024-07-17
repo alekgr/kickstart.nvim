@@ -42,6 +42,11 @@ vim.keymap.set('n', 'bd', '<CMD>bd<CR>', { desc = 'Delete buffer', silent = true
 --saving
 vim.keymap.set('n', '<leader>w', '<CMD>w<CR>', { desc = 'save a file', silent = false, noremap = true })
 
+--quickfix
+vim.keymap.set('n', '<leader>co', '<CMD>copen<CR>', { desc = 'open quickfix window', silent = false, noremap = true })
+vim.keymap.set('n', '<leader>cx', '<CMD>cclose<CR>', { desc = 'close quickfix window', silent = false, noremap = true })
+vim.keymap.set('n', '<leader>cn', '<CMD>cn<CR>', { desc = 'go to quickfix next item', silent = false, noremap = true })
+
 -- -- [[ Basic Autocommands ]]
 -- --  See `:help lua-guide-autocommands`
 --
