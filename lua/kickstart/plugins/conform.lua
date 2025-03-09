@@ -30,7 +30,13 @@ return { -- Autoformat
       --
       -- You can use a sub-list to tell conform to run *until* a formatter
       -- is found.
-      javascript = { { 'prettierd', 'prettier' } },
+      javascript = { { 'prettierd', 'prettier' }, cpp = { 'clang-format' } },
+    },
+    formatters = {
+      clang_format = {
+        command = 'clang_format',
+        append_args = { '--style={BaseonStyle: google, IndenWidth: 4)' },
+      },
     },
   },
 }
