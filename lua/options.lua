@@ -41,8 +41,12 @@ vim.opt.splitbelow = true
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
-vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.list = false
+vim.opt.listchars = 'eol:\\x23'
+
+--  tab = '│─',
+--  multispace = 'space',
+-- lead = 'space',--  trail = 'space',
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -52,3 +56,5 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 0
+
+vim.opt.shortmess:append 'cI'
