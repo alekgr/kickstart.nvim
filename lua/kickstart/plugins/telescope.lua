@@ -30,7 +30,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- The easiest way to use Telescope, is to start by doing something like:
     --  :Telescope help_tags
     --
-    -- After running this command, a window will open up and you're able to
+    -- After running this command, a window will open up and you'reble to
     -- type in the prompt window. You'll see a list of `help_tags` options and
     -- a corresponding preview of the help.
     --
@@ -53,7 +53,13 @@ return { -- Fuzzy Finder (files, lsp, etc)
       --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
       --   },
       -- },
-      -- pickers = {}
+
+      pickers = {
+        find_files = {
+          cwd = '/home/alek/projects',
+        },
+      },
+
       extensions = {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
@@ -77,12 +83,18 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[S]earch [R]esume' })
     vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
     vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+    vim.keymap.set('n', '<leader>fn', function()
+      builtin.find_files(require('telescope.themes').get_dropdown {
+        previewer = true,
+        cwd = '~/notes',
+        prompt_title = 'Notes',
+      })
+    end, { desc = 'find notes' })
 
     -- Slightly advanced example of overriding default behavior and theme
     vim.keymap.set('n', '<leader>/', function()
       -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-      builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-        winblend = 10,
+      builtin.current_buffer_fuzzy_find(require('telescope.themes').get_ivy {
         previewer = false,
       })
     end, { desc = '[/] Fuzzily search in current buffer' })
