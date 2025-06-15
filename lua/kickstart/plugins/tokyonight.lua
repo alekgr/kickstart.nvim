@@ -15,7 +15,7 @@ return {
   {
     'xiyaowong/transparent.nvim',
     lazy = false,
-    config = {
+    opts = {
       extra_groups = {
         'FloatBorder',
         'LSPInfoBorder',
