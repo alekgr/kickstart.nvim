@@ -14,7 +14,7 @@ return {
     },
     indent = { enable = true, disable = { 'ruby' } },
   },
-  config = function(_, opts)
+  opts = function(_, opts)
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 
     -- Prefer git instead of curl in order to improve connectivity in some environments
