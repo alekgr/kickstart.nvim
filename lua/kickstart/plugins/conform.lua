@@ -26,6 +26,7 @@ return {
       go = { 'goimports', 'gofmt' },
       rust = { 'rustfmt' },
       python = { 'black' },
+      sh = { 'shfmt' },
     },
   },
 }
