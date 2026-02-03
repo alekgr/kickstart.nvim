@@ -20,6 +20,8 @@ require('lazy').setup({
 
   require 'kickstart/plugins/git-worktree',
 
+  require 'kickstart/plugins/dadbod',
+
   { import = 'custom.plugins' },
 }, {
   ui = {
