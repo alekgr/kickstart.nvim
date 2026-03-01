@@ -22,6 +22,10 @@ require('lazy').setup({
 
   require 'kickstart/plugins/dadbod',
 
+  rocks = {
+    enabled = false,
+  },
+
   { import = 'custom.plugins' },
 }, {
   ui = {
