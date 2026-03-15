@@ -22,6 +22,8 @@ require('lazy').setup({
 
   require 'kickstart/plugins/dadbod',
 
+  require 'kickstart/plugins/debug',
+
   rocks = {
     enabled = false,
   },
