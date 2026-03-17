@@ -188,7 +188,10 @@ return { -- LSP Configuration & Plugins
               },
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
               diagnostics = {
-                globals = { 'vim' },
+                globals = {
+                  'vim',
+                  'require',
+                },
               },
             },
           },
