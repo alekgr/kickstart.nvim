@@ -53,6 +53,8 @@ return {
     dap.defaults.fallback.exception_breakpoints = {}
 
     dap.adapters.lldb = {
+      type = 'executable',
+      command = '/usr/bin/lldb-dap',
       configuration = {
         showDisassembly = 'never',
       },
@@ -155,8 +157,8 @@ return {
             vim.api.nvim_command('bwipeout! ' .. bufnr)
           end
         end
-        if vim.bo.filetype == "" or vim.bo.filetype == "dapui_assembler" then
-          vim.cmd("bnext")
+        if vim.bo.filetype == '' or vim.bo.filetype == 'dapui_assembler' then
+          vim.cmd 'bnext'
         end
       end)
     end
