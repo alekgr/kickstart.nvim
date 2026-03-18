@@ -1,51 +1,18 @@
 return {
-  {
-    'folke/tokyonight.nvim',
-    lazy = true,
-    priority = 1000,
-    opts = {
-      style = 'night',
-      styles = {
-        sidebars = 'dark',
-        floats = 'dark',
-      },
-      sidebars = { 'qf' },
+  "folke/tokyonight.nvim",
+  lazy = false,
+  priority = 1000,
+  opts = {
+    transparent = true, -- Enables a transparent background
+    styles = {
+      -- You can also make specific UI elements transparent
+      sidebars = "transparent", -- e.g., NvimTree, symbols-outline
+      floats = "transparent",   -- e.g., Telescope, hover windows
     },
   },
-  {
-    'xiyaowong/transparent.nvim',
-    lazy = false,
-    opts = {
-      extra_groups = {
-        'FloatBorder',
-        'LSPInfoBorder',
-        'NeoTreeNormal',
-        'NeoTreeNormalNC',
-        'NormalFloat',
-        'NotifyDEBUGBody',
-        'NotifyDEBUGBorder',
-        'NotifyERRORBody',
-        'NotifyERRORBorder',
-        'NotifyINFOBody',
-        'NotifyINFOBorder',
-        'NotifyTRACEBody',
-        'NotifyTRACEBorder',
-        'NotifyWARNBody',
-        'NotifyWARNBorder',
-        'TelescopeBorder',
-        'TelescopePreviewNormal',
-        'TelescopePromptNormal',
-        'TelescopeResultsNormal',
-        'WhichKeyFloat',
-      },
-      exclude_groups = {},
-    },
-    keys = {
-      {
-        '<Leader>ut',
-        '<Cmd>TransparentToggle<Cr>',
-        desc = 'Toggle Transparency',
-      },
-    },
-  },
+  config = function(_, opts)
+    require("tokyonight").setup(opts)
+    vim.cmd.colorscheme("tokyonight")
+  end,
 }
+

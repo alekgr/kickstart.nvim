@@ -99,6 +99,10 @@ vim.g.loaded_ruby_provider = 0
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
+-- load transparency before loading any plugins
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+
 require 'options'
 require 'keymaps'
 require 'lazy-bootstrap'
