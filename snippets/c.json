@@ -1,0 +1,11 @@
+{
+  "Main Function": {
+    "prefix": "mainn", 
+    "body": [
+      "int main(int argc, char *argv[]) {",
+      "\t$0",
+      "\treturn 0;"
+    ],
+    "description": "My custom C main"
+  }
+}
