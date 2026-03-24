@@ -103,7 +103,17 @@ vim.g.loaded_ruby_provider = 0
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 
-require 'options'
-require 'keymaps'
+require("user.options")
+require("user.keymaps")
 require 'lazy-bootstrap'
-require 'lazy-plugins'
+--require 'lazy-plugins'
+
+require("lazy").setup({
+	spec = { 
+		{ import = "user.plugins" },
+	},
+})
+
+vim.lsp.enable("pyright")
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("clangd")
