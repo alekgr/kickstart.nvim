@@ -107,9 +107,8 @@ require("user.options")
 require("user.keymaps")
 require 'lazy-bootstrap'
 --require 'lazy-plugins'
-
 require("lazy").setup({
-	spec = { 
+	spec = {
 		{ import = "user.plugins" },
 	},
 })
