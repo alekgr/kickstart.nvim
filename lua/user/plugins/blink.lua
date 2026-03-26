@@ -11,6 +11,12 @@ return {
   opts = {
     -- 'default' for built-in, 'super-tab' for a common alternative
     completion = {
+	    list = {
+		    selection = {
+			    preselect = false,
+			    autoinsert  = false,
+		    },
+	    },
 	    menu = {
 		    auto_show = true,
 		    border = 'rounded',

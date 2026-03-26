@@ -61,3 +61,5 @@ vim.opt.shortmess:append 'cI'
 
 -- turn on highlighting 
 vim.opt.hlsearch = true
+
+vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert" }
