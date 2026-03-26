@@ -16,6 +16,7 @@ return {
       ensure_installed = {
         "clangd",
         "lua-language-server", -- Note the Mason registry name!
+	"pyright",
       },
     },
   },
