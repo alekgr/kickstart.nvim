@@ -54,7 +54,7 @@ return {
 
     dap.adapters.lldb = {
       type = 'executable',
-      command = '/usr/bin/lldb-dap',
+      command = vim.fn.stdpath("data") .. '/mason/bin/codelldb',
       configuration = {
         showDisassembly = 'never',
       },
