@@ -60,10 +60,18 @@ vim.api.nvim_create_autocmd('TermOpen', {
 
 -- Small terminal 
 vim.keymap.set('n', '<leader>st', function()
-  vim.cmd.vnew()
-  vim.cmd.term()
-  vim.cmd.wincmd 'J'
-  vim.api.nvim_win_set_height(0, 20)
+
+    if vim.bo.buftype == 'terminal' then
+	    vim.cmd('vsplit | terminal')
+    else
+	    vim.cmd('botright 20split | terminal')
+    end
+
+
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.cmd('startinsert')
+  --vim.api.nvim_win_set_height(0, 20)
 end)
 
 -- lsp commands
@@ -76,6 +84,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'grn', vim.lsp.buf.rename, opts)
     vim.keymap.set('n', 'grr', vim.lsp.buf.references, opts)
     vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
 
     -- 2. Generic Completion (v0.11 native)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -85,8 +94,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+vim.api.nvim_create_autocmd('Filetype', {
+	pattern = { 'c'},
+	callback = function()
+		vim.bo.commentstring = '/* %s */'
+	end,
+})
 
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>ee', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 --vim.keymap.set('n', '<leader>ee', vim.diagnostic.setqflist(), { desc = 'Open errors in
-
