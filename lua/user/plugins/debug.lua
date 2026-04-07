@@ -67,35 +67,96 @@ return {
       args = { '--quiet', '--interpreter=dap' },
     }
 
+
     dap.configurations.c = {
       {
-        name = 'Run executable  (codelldb)',
-        type = 'codelldb',
-        request = 'launch',
+        name = "1: launch 'main' (no args)",
+        type = "codelldb",
+        request = "launch",
         program = function()
-          return vim.fn.input {
-            prompt = 'Path to executable',
-            default = vim.fn.getcwd() .. '/',
-            completion = 'file',
-          }
+          	return vim.fn.getcwd() .. '/main'
         end,
-        cwd = '${workspaceFolder}',
+	cwd = '${workspaceFolder}',
         stopOnEntry = false,
         showDisassembly = 'never',
-        initCommands = {
-          'settings set stop-disassembly-count 0',
+	
+	initCommands = {
+  	  'settings set stop-disassembly-count 0',
           'settings set stop-disassembly-display never',
           'settings set target.process.stop-on-exec false',
           'settings set target.process.stop-on-sharedlibrary-events false',
-          'settings set target.process.thread.step-avoid-libraries true',
+	},
+	SetupCommands = {
+	  {
+          	text = 'enable pretty printing',
+          	description = 'enable pretty printing',
+          	IgnoreFailures = true,
+	  },
         },
-        SetupCommands = {
-          text = 'enable pretty printing',
-          description = 'enable pretty printing',
-          IgnoreFailures = true,
-        },
+
       },
-    }
+      {
+	name = "2: Launch with Custom Args",
+    	type = "codelldb",
+    	request = "launch",
+    	program = function()
+      		return vim.fn.getcwd() .. '/main'
+    	end,
+    	args = function()
+      		local args_string = vim.fn.input('Enter argv: ')
+      		return vim.split(args_string, " +")
+    	end,
+    	cwd = '${workspaceFolder}',
+    	stopOnEntry = false,
+	initCommands = {
+  	  'settings set stop-disassembly-count 0',
+          'settings set stop-disassembly-display never',
+          'settings set target.process.stop-on-exec false',
+          'settings set target.process.stop-on-sharedlibrary-events false',
+	},
+
+	SetupCommands = {
+	  {
+          	text = 'enable pretty printing',
+          	description = 'enable pretty printing',
+          	IgnoreFailures = true,
+	  },
+
+        },
+
+      },
+
+      {
+	name = "3: Manual Select (File & Args)",
+    	type = "codelldb",
+    	request = "launch",
+    	program = function()
+      		return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    	end,
+    	args = function()
+      		local args_string = vim.fn.input('Arguments: ')
+      		return vim.split(args_string, " +")
+    	end,
+    	cwd = '${workspaceFolder}',
+    	stopOnEntry = false,
+	initCommands = {
+  	  'settings set stop-disassembly-count 0',
+          'settings set stop-disassembly-display never',
+          'settings set target.process.stop-on-exec false',
+          'settings set target.process.stop-on-sharedlibrary-events false',
+	},
+
+	SetupCommands = {
+	  {
+          	text = 'enable pretty printing',
+          	description = 'enable pretty printing',
+          	IgnoreFailures = true,
+	  },
+        },
+
+      },
+
+}
     -- Basic debugging keymaps, feel free to change to your liking!
     vim.keymap.set('n', '<leader>ds', dap.continue, { desc = 'Debug: Start/Continue' })
     vim.keymap.set('n', '<leader>di', dap.step_into, { desc = 'Debug: Step Into' })
@@ -105,6 +166,12 @@ return {
     vim.keymap.set('n', '<leader>B', function()
       dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
     end, { desc = 'Debug: Set Breakpoint' })
+    vim.keymap.set('n', '<Leader>dq', function()
+  	require('dap').terminate()
+  	require('dapui').close()
+  	-- If using virtual text, you might also want to refresh here
+  	-- require('dap_virtual_text').refresh() 
+	end, { desc = 'Quit DAP session and close UI' })
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
@@ -128,50 +195,30 @@ return {
       },
     }
 
-    local function cleanup_asm_buffers()
-      vim.schedule(function()
-        for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-          local name = vim.api.nvim_buf_get_name(bufnr)
-          -- CodeLLDB often opens assembly in buffers with these names
-          if name:match 'disassembly' or name:match 'out of source' then
-            vim.api.nvim_buf_delete(bufnr, { force = true })
-          end
-        end
-        -- Also close DAP UI if you use it
-        local ok, dapui = pcall(require, 'dapui')
-	if ok then
-          dapui.close()
-        end
-      end)
-    end
-
-    local function shutdowndebugger()
-      dapui.close()
-      dap.disconnect()
-      dap.close()
-
-      vim.schedule(function()
-        for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-          local name = vim.api.nvim_buf_get_name(bufnr)
-          if name:match 'disassembly' or name:match 'out of source' then
-            vim.api.nvim_command('bwipeout! ' .. bufnr)
-          end
-        end
-        if vim.bo.filetype == '' or vim.bo.filetype == 'dapui_assembler' then
-          vim.cmd 'bnext'
-        end
-      end)
-    end
-
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
     vim.keymap.set('n', '<leader>d', '<Cmd>lua require("dapui").toggle()<CR>', { desc = 'Debug: See last session result.' })
-    vim.keymap.set('n', '<leader>dx', shutdowndebugger)
+
+    vim.keymap.set('n', '<leader>dc', function()
+  	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    		local name = vim.api.nvim_buf_get_name(buf)
+    		if name:match("DAP Disassembly") or name:match("!lldb") then
+      			vim.api.nvim_buf_delete(buf, { force = true })
+    		end
+  	end
+  	print("Assembly buffer cleared.")
+    end, { desc = 'Clear assembly buffer but keep session' })
+
 
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-    dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-    dap.listeners.before.event_exited['dapui_config'] = dapui.close
-    dap.listeners.after.event_terminated['cleanup_asm'] = cleanup_asm_buffers
-    dap.listeners.after.event_exited['cleanup_asm'] = cleanup_asm_buffers
+    dap.listeners.after.event_terminated['dapui_config'] = function()
+    	dapui.close()
+    	dap.terminate()
+    end
+    dap.listeners.after.event_exited['dapui_config'] = function()
+	    dapui.close()
+	    dap.terminate()
+    end
+
     -- dap.listeners.after.event_terminated['cleanup'] = fully_terminate
     -- dap.listeners.after.event_exited['cleanup'] = fully_terminate
 
