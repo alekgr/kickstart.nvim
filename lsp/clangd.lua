@@ -19,7 +19,7 @@ return {
   -- This runs whenever clangd attaches to a buffer
   on_attach = function(client, bufnr)
     -- Enable native auto-completion for this buffer
-    if client.supports_method('textDocument/completion') then
+    if client:supports_method('textDocument/completion') then
       vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
     end
     -- You can also put clangd-specific keymaps here
