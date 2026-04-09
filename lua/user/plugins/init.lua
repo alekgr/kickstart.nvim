@@ -17,3 +17,6 @@ require ("user.plugins.mini")
 
 vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter"})
 require ("user.plugins.treesitter")
+
+vim.pack.add({ "https://github.com/williamboman/mason.nvim"})
+require ("user.plugins.mason")
