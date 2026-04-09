@@ -57,7 +57,7 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 0
 
-vim.opt.shortmess:append 'cI'
+vim.opt.shortmess:append 'c'
 
 -- turn on highlighting 
 vim.opt.hlsearch = true
