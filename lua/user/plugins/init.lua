@@ -20,3 +20,9 @@ require ("user.plugins.treesitter")
 
 vim.pack.add({ "https://github.com/williamboman/mason.nvim"})
 require ("user.plugins.mason")
+
+vim.pack.add({
+	'https://github.com/nvim-lua/plenary.nvim',
+	'https://github.com/nvim-telescope/telescope.nvim'
+})
+require ("user.plugins.telescope")
