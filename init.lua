@@ -16,6 +16,7 @@ vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 
 require("user.options")
 require("user.keymaps")
+require("user.plugins")
 
 vim.lsp.enable("pyright")
 vim.lsp.enable("lua_ls")
