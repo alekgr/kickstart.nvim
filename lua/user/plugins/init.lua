@@ -5,3 +5,6 @@ vim.pack.add({
 	{ src = "https://github.com/saghen/blink.cmp", version = "v1" }
 })
 require ("user.plugins.blink")
+
+vim.pack.add({ "https://github.com/lukas-reineke/indent-blankline.nvim" })
+require ("user.plugins.indent-blankline")
