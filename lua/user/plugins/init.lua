@@ -26,3 +26,9 @@ vim.pack.add({
 	'https://github.com/nvim-telescope/telescope.nvim'
 })
 require ("user.plugins.telescope")
+
+vim.pack.add({
+	"https://github.com/nvim-tree/nvim-web-devicons",
+	"https://github.com/stevearc/oil.nvim"
+})
+require ("user.plugins.oil")
