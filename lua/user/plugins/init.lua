@@ -1,7 +1,7 @@
 vim.pack.add({ "https://github.com/folke/tokyonight.nvim" })
 require ("user.plugins.tokyonight")
 
-vim.pack.add({ 
+vim.pack.add({
 	{ src = "https://github.com/saghen/blink.cmp", version = "v1" }
 })
 require ("user.plugins.blink")
@@ -32,3 +32,11 @@ vim.pack.add({
 	"https://github.com/stevearc/oil.nvim"
 })
 require ("user.plugins.oil")
+
+vim.pack.add({
+  'https://github.com/mfussenegger/nvim-dap',          -- The core debugger
+  'https://github.com/rcarriga/nvim-dap-ui',           -- The graphical interface
+  'https://github.com/nvim-neotest/nvim-nio',           -- Required dependency for dap-ui
+  'https://github.com/theHamsta/nvim-dap-virtual-text'  -- Inline variable values
+})
+require ("user.plugins.debug")
