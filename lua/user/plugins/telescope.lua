@@ -49,6 +49,7 @@ vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Telescope keymaps' 
 vim.keymap.set('n', '<leader>fd', builtin.diagnostics, {desc = 'Telescope diagnostics' })
 vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = 'Telescope [S]earch [S]elect Telescope' })
 vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = 'Telescope [S]earch  current []W]ord' })
+vim.keymap.set('n', '<leader>fm', builtin.marks, { desc = "Telescope Marks"})
 vim.keymap.set('n', '<leader>fn', function()
       builtin.find_files(require('telescope.themes').get_dropdown {
         previewer = true,
@@ -58,7 +59,7 @@ vim.keymap.set('n', '<leader>fn', function()
     end, { desc = 'Find notes' })
 
 
-vim.keymap.set('n', '<leader>fm', function ()
+vim.keymap.set('n', '<leader>fc', function ()
 	    require('telescope.builtin').find_files({
 		    search_dirs = {
 			    vim.fn.getcwd(),
