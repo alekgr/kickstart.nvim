@@ -40,3 +40,9 @@ vim.pack.add({
   'https://github.com/theHamsta/nvim-dap-virtual-text'  -- Inline variable values
 })
 require ("user.plugins.debug")
+
+vim.pack.add({
+	"https://github.com/BartSte/nvim-project-marks",
+	"https://github.com/dimtion/guttermarks.nvim"
+})
+require ("user.plugins.marks")
