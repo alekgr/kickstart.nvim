@@ -13,7 +13,7 @@ configs.setup({
 
   highlight = {
     enable = true, -- This is what makes TokyoNight look amazing
-    additional_vim_regex_highlighting = false,
+    additional_vim_regex_highlighting = true,
   },
   
   indent = {
