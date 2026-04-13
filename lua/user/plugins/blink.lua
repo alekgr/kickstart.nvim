@@ -25,8 +25,8 @@ require('blink.cmp').setup({
         end,
         opts = {
           -- Absolute path for your nvim12 setup
-          search_paths = { 
-            '/home/alek/.local/share/nvim12/site/pack/plugins/start/friendly-snippets' 
+          search_paths = {
+            '/home/alek/.local/share/nvim12/site/pack/plugins/start/friendly-snippets'
           }
         }
       },
@@ -38,8 +38,24 @@ require('blink.cmp').setup({
     list = {
       selection = { preselect = true, auto_insert = true }
     },
+    menu = {
+	    auto_show = true,
+	    border = 'rounded',
+	    draw = {
+		    padding = 0,
+		    gap = 1,
+		    columns = {
+			    { 'kind_icon' }, { 'label','label_description', gap = 1},
+		    },
+		    components = {
+			    label = {
+				width = { fill = false, max = 40 },
+			    },
+		    },
+	    }
+    },
     -- Use 'prefix' range to stop 'sse' from matching 'assert'
-    keyword = { range = 'prefix' }, 
+    keyword = { range = 'prefix' },
   },
 
   snippets = { preset = 'default' }
