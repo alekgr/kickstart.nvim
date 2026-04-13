@@ -5,6 +5,10 @@
       "src": "https://github.com/saghen/blink.cmp",
       "version": "'v1'"
     },
+    "friendly-snippets": {
+      "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
+      "src": "https://github.com/rafamadriz/friendly-snippets"
+    },
     "gitsigns.nvim": {
       "rev": "8d82c240f190fc33723d48c308ccc1ed8baad69d",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
@@ -22,7 +26,7 @@
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "4182d64727fb4876407af65c181b85428a4a70d1",
+      "rev": "c67822c53e8e282fe863343e88aa0a8ca3534059",
       "src": "https://github.com/echasnovski/mini.nvim"
     },
     "nvim-dap": {
