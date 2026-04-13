@@ -13,9 +13,16 @@ return {
   },
   filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
   root_markers = { 'compile_commands.json', 'compile_flags.txt', '.git', 'makefile', 'Makefile'},
-  capabilities = {
+  capabilities = require('blink.cmp').get_lsp_capabilities({
 	  offsetEncoding = { "utf-16" },
-  },
+	  textDocument = {
+		  completion = {
+			  completionItem = {
+				  snippetSupport = false
+			  }
+		  }
+	  }
+  }),
   -- This runs whenever clangd attaches to a buffer
   on_attach = function(client, bufnr)
     -- Enable native auto-completion for this buffer
