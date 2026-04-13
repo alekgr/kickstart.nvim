@@ -3,13 +3,14 @@ if not status_ok then return end
 
 gitsigns.setup({
   signs = {
-    add          = { text = '┃' },
-    change       = { text = '┃' },
+    add          = { text = '+' },
+    change       = { text = '~' },
     delete       = { text = '_' },
     topdelete    = { text = '‾' },
     changedelete = { text = '~' },
-    untracked    = { text = '┆' },
+    untracked    = { text = '?' },
   },
+  attach_to_untracked = true,
   -- Useful keymaps
   on_attach = function(bufnr)
     local gs = package.loaded.gitsigns
