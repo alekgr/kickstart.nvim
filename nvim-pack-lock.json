@@ -14,7 +14,7 @@
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "guttermarks.nvim": {
-      "rev": "9063915df8e5067c2f1e6263c40392624bcd2744",
+      "rev": "85ad369b3828d89519e7c3fb2b9e5915cd695f69",
       "src": "https://github.com/dimtion/guttermarks.nvim"
     },
     "indent-blankline.nvim": {
@@ -66,7 +66,7 @@
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "telescope.nvim": {
-      "rev": "f7c673b8e46e8f233ff581d3624a517d33a7e264",
+      "rev": "3ab376cfae65b921dda454df5967f8df673effc6",
       "src": "https://github.com/nvim-telescope/telescope.nvim"
     },
     "tokyonight.nvim": {
