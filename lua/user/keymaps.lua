@@ -28,6 +28,12 @@ vim.keymap.set('n', 'bd', '<CMD>bd<CR>', { desc = 'Delete buffer', silent = true
 --saving
 vim.keymap.set('n', '<leader>w', '<CMD>w<CR>', { desc = 'save a file', silent = false, noremap = true })
 
+--quit before making writting changes
+vim.keymap.set('n', '<leader>qw', '<CMD>wq!<CR>', { desc = 'quit nvim', silent = false, noremap = true } )
+
+--quit  with out making any changes
+vim.keymap.set('n', '<leader>qq', '<CMD>q!<CR>', { desc = 'quit nvim', silent = false, noremap = true } )
+
 --quickfix
 vim.keymap.set('n', '<leader>co', '<CMD>copen<CR>', { desc = 'open quickfix window', silent = false, noremap = true })
 vim.keymap.set('n', '<leader>cx', '<CMD>cclose<CR>', { desc = 'close quickfix window', silent = false, noremap = true })
