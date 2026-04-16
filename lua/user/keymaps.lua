@@ -94,8 +94,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-vim.api.nvim_create_autocmd('Filetype', {
-	pattern = { 'c'},
+local my_lsp_group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+	group = my_lsp_group,
+	pattern = { 'c','h'},
 	callback = function()
 		vim.bo.commentstring = '/* %s */'
 	end,
