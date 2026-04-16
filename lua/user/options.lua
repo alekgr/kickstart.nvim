@@ -63,3 +63,11 @@ vim.opt.shortmess:append 'c'
 vim.opt.hlsearch = true
 
 vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert" }
+
+vim.g_c_syntax_for_h = 1
+
+vim.filetype.add({
+	extension = {
+		h = 'c',
+	}
+})
