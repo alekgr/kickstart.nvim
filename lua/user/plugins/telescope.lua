@@ -41,7 +41,14 @@ telescope.setup({
 local builtin = require('telescope.builtin')
 
 -- Files and Text
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>ff', function ()
+	builtin.find_files({
+		cwd = "/",
+		hidden = true,
+		search_dirs = { "/" },
+		prompt_title = "Find all files"
+	})
+	end, { desc = "Find all files"})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
@@ -54,19 +61,28 @@ vim.keymap.set('n', '<leader>fn', function()
       builtin.find_files(require('telescope.themes').get_dropdown {
         previewer = true,
         cwd = '~/notes',
-        prompt_title = 'Notes',
+        prompt_title = 'My Notes',
       })
     end, { desc = 'Find notes' })
 
+vim.keymap.set('n', '<leader>fh', function ()
+	    	builtin.find_files({
+		    cwd = "~/",
+		    search_dirs = { "~/" },
+		    hidden = true,
+		    prompt_title = "Search .config files",
+	    })
+    end, { desc = 'Telescope find files in home direcotries and inclding configs' })
+
+
+
 
 vim.keymap.set('n', '<leader>fc', function ()
-	    require('telescope.builtin').find_files({
-		    search_dirs = {
-			    vim.fn.getcwd(),
-			    vim.fn.stdpath("config")
-		    },
+	    	builtin.find_files({
+		    cwd = "~/.config",
+		    search_dirs = { "~/.config" },
 		    hidden = true,
-		    prompt_title = "Multi-directory Search",
+		    prompt_title = "Search .config files",
 	    })
     end, { desc = 'Telescope find files in home direcotries and inclding configs' })
 
@@ -74,10 +90,11 @@ vim.keymap.set('n', '<leader>fc', function ()
 vim.keymap.set('n', '<leader>/', function()
       -- You can pass additional configuration to Telescope to change the theme, layout, etc.
       builtin.current_buffer_fuzzy_find(require('telescope.themes').get_ivy {
+	prompt_title = "fuzzy current file",
         previewer = false,
       })
     end, { desc = '[/] Fuzzily search in current buffer' })
 
-vim.keymap.set('n', '<leader>sn', function()
-      builtin.find_files { cwd = vim.fn.stdpath 'config' }
+vim.keymap.set('n', '<leader>fv', function()
+      builtin.find_files { cwd = vim.fn.stdpath 'config', prompt_title = "Neovim files" }
     end, { desc = '[S]earch [N]eovim files' })
