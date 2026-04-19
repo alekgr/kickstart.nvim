@@ -71,3 +71,13 @@ vim.filetype.add({
 		h = 'c',
 	}
 })
+
+
+vim.api.nvim_create_autocmd({"BufReadPost","BufWinEnter" },{
+	pattern = { "*" },
+	callback = function()
+		vim.opt_local.foldmethod = "expr"
+		vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+		vim.opt_local.foldlevel = 99
+	end
+})
