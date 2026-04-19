@@ -74,7 +74,7 @@ vim.filetype.add({
 
 vim.api.nvim_create_autocmd("FileType", {
     group = fold_group,
-    pattern = { "python", "c", "cpp" }, -- Add languages here
+    pattern = { "python", "c", "cpp", "zsh" }, -- Add languages here
     callback = function(args)
         -- 1. Check if Treesitter is actually active for this buffer
         local ok, parser = pcall(vim.treesitter.get_parser, args.buf)
