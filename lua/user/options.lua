@@ -72,12 +72,23 @@ vim.filetype.add({
 	}
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+    group = fold_group,
+    pattern = { "python", "c", "cpp" }, -- Add languages here
+    callback = function(args)
+        -- 1. Check if Treesitter is actually active for this buffer
+        local ok, parser = pcall(vim.treesitter.get_parser, args.buf)
+        
+        if ok and parser then
+            -- Use Treesitter for Python/C if parser is ready
+            vim.opt_local.foldmethod = "expr"
+            vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        else
+            -- Fallback for C if Treesitter fails: use syntax
+            vim.opt_local.foldmethod = "syntax"
+        end
 
-vim.api.nvim_create_autocmd({"BufReadPost","BufWinEnter" },{
-	pattern = { "*" },
-	callback = function()
-		vim.opt_local.foldmethod = "expr"
-		vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-		vim.opt_local.foldlevel = 99
-	end
+        vim.opt_local.foldlevel = 99
+        vim.opt_local.foldenable = true
+    end,
 })
