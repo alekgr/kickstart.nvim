@@ -1,14 +1,31 @@
--- =============================================================================
--- 1. TREESITTER & NATIVE MOTIONS
--- =============================================================================
--- We skip require('nvim-treesitter.configs').setup() for 0.12 native core logic
-
--- Attach buffer-local keymaps and start parser automatically
 vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = { "c", "cpp", "lua" },
   callback = function()
-    -- Native 0.12 command to start Treesitter highlighting
+    -- Start native highlighting
     vim.treesitter.start()
+
+    local opts = { buffer = true, silent = true }
+
+    -- DYNAMIC PATH LOGIC: Works on nvim12 or nvim master automatically
+    local data_path = vim.fn.stdpath('data')
+    local plugin_root = data_path .. "/site/pack/plugins/start/nvim-treesitter-textobjects/lua"
+    
+    if not string.find(package.path, plugin_root) then
+        package.path = package.path .. ";" .. plugin_root .. "/?.lua"
+    end
+
+    -- Load move module (Using DASH name to prevent 'shared' module errors)
+    local ok, ts_move = pcall(require, 'nvim-treesitter-textobjects.move')
+
+    if ok then
+        -- Directional Jumping (Normal Mode)
+        vim.keymap.set('n', ']f', function() ts_move.goto_next_start('@function.outer') end, opts)
+        vim.keymap.set('n', '[f', function() ts_move.goto_previous_start('@function.outer') end, opts)
+        vim.keymap.set('n', ']]', function() ts_move.goto_next_start('@class.outer') end, opts)
+        vim.keymap.set('n', '[[', function() ts_move.goto_previous_start('@class.outer') end, opts)
+        vim.keymap.set('n', ']a', function() ts_move.goto_next_start('@parameter.inner') end, opts)
+        vim.keymap.set('n', '[a', function() ts_move.goto_previous_start('@parameter.inner') end, opts)
+    end
 
     -- Helper for sniper selections (af, if, ac)
     local function select_node_by_type(types)
@@ -28,7 +45,6 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     end
 
     -- Sniper mappings (Around/Inside Function and Class)
-    local opts = { buffer = true, silent = true }
     vim.keymap.set({ "x", "o" }, "af", function() select_node_by_type({ "function_definition", "declaration" }) end, opts)
     vim.keymap.set({ "x", "o" }, "if", function() select_node_by_type({ "compound_statement", "block" }) end, opts)
     vim.keymap.set({ "x", "o" }, "ac", function() select_node_by_type({ "struct_specifier", "class_specifier" }) end, opts)
@@ -41,7 +57,9 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 local function switch_source_header()
   local file = vim.api.nvim_buf_get_name(0)
   local utils = { c = "h", cpp = "hpp", h = "c", hpp = "cpp" }
-  local ext = file:match("^.+(%..+)$"):sub(2)
+  local ext = file:match("^.+(%..+)$")
+  if not ext then return end
+  ext = ext:sub(2)
   local target_ext = utils[ext]
 
   if target_ext then
@@ -58,13 +76,11 @@ vim.keymap.set("n", "<leader>a", switch_source_header, { desc = "Switch C Source
 -- =============================================================================
 -- 3. NATIVE WINBAR (v0.12 Context Fix)
 -- =============================================================================
--- We define the function globally so the winbar can access it via v:lua
 function _G.get_treesitter_context()
   local ok, node = pcall(vim.treesitter.get_node)
   if not ok or not node then return "" end
   while node do
     if node:type() == "function_definition" or node:type() == "class_definition" then
-      -- Get child(1) which is usually the name/identifier node
       local name_node = node:child(1)
       if name_node then
         return "  " .. vim.treesitter.get_node_text(name_node, 0) .. " "
