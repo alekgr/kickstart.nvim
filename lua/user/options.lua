@@ -72,23 +72,41 @@ vim.filetype.add({
 	}
 })
 
-vim.api.nvim_create_autocmd("FileType", {
+-- Create a single group to manage all folding autocmds
+local fold_group = vim.api.nvim_create_augroup("UniversalFolding", { clear = true })
+
+vim.api.nvim_create_autocmd({ "FileType", "BufReadPost" }, {
     group = fold_group,
-    pattern = { "python", "c", "cpp", "zsh" }, -- Add languages here
     callback = function(args)
-        -- 1. Check if Treesitter is actually active for this buffer
+        -- 1. Ensure the buffer is valid
+        if not vim.api.nvim_buf_is_valid(args.buf) then return end
+
+        -- 2. Determine folding method (Treesitter vs. Indent)
         local ok, parser = pcall(vim.treesitter.get_parser, args.buf)
-        
+
         if ok and parser then
-            -- Use Treesitter for Python/C if parser is ready
-            vim.opt_local.foldmethod = "expr"
-            vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+            -- High-accuracy folding for Python, C, C++, Lua, Bash, etc.
+            vim.wo.foldmethod = "expr"
+            vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
         else
-            -- Fallback for C if Treesitter fails: use syntax
-            vim.opt_local.foldmethod = "syntax"
+            -- Reliable fallback for languages without a TS parser
+            vim.wo.foldmethod = "indent"
         end
 
-        vim.opt_local.foldlevel = 99
-        vim.opt_local.foldenable = true
+        -- 3. Folding Preferences
+        vim.wo.foldlevel = 99    -- Start with all folds open
+        vim.wo.foldenable = true -- Ensure folding is turned on
+        vim.wo.foldminlines = 0  -- Allow folding even 1-line functions
+
+        -- 4. Initial "Poke" (Only runs ONCE per buffer to avoid cursor lag)
+        if not vim.b[args.buf].folded_once then
+            vim.schedule(function()
+                if vim.api.nvim_buf_is_valid(args.buf) then
+                    -- Re-calculates folds without moving the cursor while you type
+                    vim.cmd("normal! zx")
+                    vim.b[args.buf].folded_once = true
+                end
+            end)
+        end
     end,
 })
