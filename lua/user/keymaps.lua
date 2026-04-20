@@ -115,13 +115,3 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>ee', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
--- Jump to previous/next function start
-vim.keymap.set('n', '[f', function()
-  require('nvim-treesitter.textobjects.move').goto_previous_start('@function.outer')
-end, { desc = 'Previous Function' })
-
-vim.keymap.set('n', ']f', function()
-  require('nvim-treesitter.textobjects.move').goto_next_start('@function.outer')
-end, { desc = 'Next Function' })
---vim.keymap.set('n', '<leader>ee', vim.diagnostic.setqflist(), { desc = 'Open errors in
