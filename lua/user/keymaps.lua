@@ -40,6 +40,10 @@ vim.keymap.set('n', '<leader>cx', '<CMD>cclose<CR>', { desc = 'close quickfix wi
 vim.keymap.set('n', '<leader>cn', '<CMD>cn<CR>', { desc = 'go to quickfix next item', silent = false, noremap = true })
 vim.keymap.set('n', '<leader>cp', '<CMD>cp<CR>', { desc = 'go to quickfix previous item', silent = false, noremap = true })
 
+-- when moving page down also put the cursor in middle
+vim.keymap.set('n', '<C-u>','<C-u>zz')
+vim.keymap.set('n', '<C-d>','<C-d>zz')
+
 -- -- [[ Basic Autocommands ]]
 -- --  See `:help lua-guide-autocommands`
 --
