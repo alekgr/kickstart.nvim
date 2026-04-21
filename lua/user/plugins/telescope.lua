@@ -65,12 +65,12 @@ vim.keymap.set('n', '<leader>fn', function()
 	})
 end, { desc = 'Find notes' })
 
-vim.keymap.set('n', '<leader>fh', function()
+vim.keymap.set('n', '<leader>f~', function()
 	builtin.find_files({
 		cwd = "~/",
 		search_dirs = { "~/" },
 		hidden = true,
-		prompt_title = "Search .config files",
+		prompt_title = "Search Home files",
 	})
 end, { desc = 'Telescope find files in home direcotries and inclding configs' })
 
