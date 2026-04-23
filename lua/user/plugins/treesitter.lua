@@ -45,9 +45,9 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     end
 
     -- Sniper mappings (Around/Inside Function and Class)
-    vim.keymap.set({ "x", "o" }, "af", function() select_node_by_type({ "function_definition", "declaration" }) end, opts)
-    vim.keymap.set({ "x", "o" }, "if", function() select_node_by_type({ "compound_statement", "block" }) end, opts)
-    vim.keymap.set({ "x", "o" }, "ac", function() select_node_by_type({ "struct_specifier", "class_specifier" }) end, opts)
+    --vim.keymap.set({ "x", "o" }, "af", function() select_node_by_type({ "function_definition", "declaration" }) end, opts)
+    --vim.keymap.set({ "x", "o" }, "if", function() select_node_by_type({ "compound_statement", "block" }) end, opts)
+    --vim.keymap.set({ "x", "o" }, "ac", function() select_node_by_type({ "struct_specifier", "class_specifier" }) end, opts)
   end,
 })
 
