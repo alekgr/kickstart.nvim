@@ -5,7 +5,7 @@ return {
 	settings = {
 		Lua = {
 			runtime = { version = 'LuaJIT' },
-			diagnostics = { globals = { 'vim' } },
+			diagnostics = { globals = { 'vim','hl' } },
 			workspace =  { library = { vim.env.VIMRUNTIME } },
 		},
 	},
