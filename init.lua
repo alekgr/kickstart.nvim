@@ -35,6 +35,13 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end,
 })
 
+local group = vim.api.nvim_create_augroup("custom-term", { clear = true })
+vim.api.nvim_create_autocmd("TermOpen", {
+	group = group,
+	callback = function()
+		vim.opt_local.buflisted = false
+	end, }
+)
 -- Trigger it immediately for the current session
 vim.cmd("colorscheme " .. vim.g.colors_name)
 
