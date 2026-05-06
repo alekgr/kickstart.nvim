@@ -59,12 +59,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- when opening terminal remove numbers 
-vim.api.nvim_create_autocmd('TermOpen', {
+vim.api.nvim_create_autocmd({'TermOpen','BufEnter'}, {
   desc = 'remove numbers in terminal mode',
   group = vim.api.nvim_create_augroup('custom-term-open', { clear = true }),
+  pattern = "term://*",
   callback = function()
     vim.opt.number = false
     vim.opt.relativenumber = false
+    vim.cmd("startinsert")
   end,
 })
 
