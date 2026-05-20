@@ -66,47 +66,21 @@ vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert" }
 
 vim.g_c_syntax_for_h = 1
 
+
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldlevel = 0
+vim.opt.foldlevelstart = 0
+vim.opt.foldenable = false
+function MyfoldText()
+	local line = vim.fn.getline(vim.v.foldstart)
+	local line_count = vim.v.foldend - vim.v.foldstart + 1
+	return "   " .. line .. " ... (" .. line_count .. " lines) "
+end
+vim.opt.foldtext = "v:lua.MyfoldText()"
+
 vim.filetype.add({
 	extension = {
 		h = 'c',
 	}
-})
-
--- Create a single group to manage all folding autocmds
-local fold_group = vim.api.nvim_create_augroup("UniversalFolding", { clear = true })
-
-vim.api.nvim_create_autocmd({ "FileType", "BufReadPost" }, {
-    group = fold_group,
-    callback = function(args)
-        -- 1. Ensure the buffer is valid
-        if not vim.api.nvim_buf_is_valid(args.buf) then return end
-
-        -- 2. Determine folding method (Treesitter vs. Indent)
-        local ok, parser = pcall(vim.treesitter.get_parser, args.buf)
-
-        if ok and parser then
-            -- High-accuracy folding for Python, C, C++, Lua, Bash, etc.
-            vim.wo.foldmethod = "expr"
-            vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-        else
-            -- Reliable fallback for languages without a TS parser
-            vim.wo.foldmethod = "indent"
-        end
-
-        -- 3. Folding Preferences
-        vim.wo.foldlevel = 99    -- Start with all folds open
-        vim.wo.foldenable = true -- Ensure folding is turned on
-        vim.wo.foldminlines = 0  -- Allow folding even 1-line functions
-
-        -- 4. Initial "Poke" (Only runs ONCE per buffer to avoid cursor lag)
-        if not vim.b[args.buf].folded_once then
-            vim.schedule(function()
-                if vim.api.nvim_buf_is_valid(args.buf) then
-                    -- Re-calculates folds without moving the cursor while you type
-                    vim.cmd("normal! zx")
-                    vim.b[args.buf].folded_once = true
-                end
-            end)
-        end
-    end,
 })
