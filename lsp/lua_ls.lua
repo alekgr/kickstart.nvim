@@ -5,7 +5,11 @@ return {
 	settings = {
 		Lua = {
 			runtime = { version = 'LuaJIT' },
-			diagnostics = { globals = { 'vim','hl' } },
+			diagnostics =
+			{ globals = { 'vim','hl' },
+			disable =
+			{ "unused-local"},
+		},
 			workspace =  { library = { vim.env.VIMRUNTIME } },
 		},
 	},
